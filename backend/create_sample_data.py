@@ -6,7 +6,6 @@ os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'university_erp.settings')
 django.setup()
 
 from django.contrib.auth import get_user_model
-from users.models import UserProfile
 from academics.models import Program, Course
 from hr.models import Department, Employee
 from admissions.models import Applicant, Application
@@ -34,7 +33,8 @@ def create_sample_data():
         password='admin123',
         first_name='Admin',
         last_name='User',
-        role='Admin'
+        is_staff=True,
+        is_superuser=True
     )
     
     student_user = User.objects.create_user(
@@ -43,7 +43,8 @@ def create_sample_data():
         password='student123',
         first_name='John',
         last_name='Doe',
-        role='Student'
+        is_staff=False,
+        is_superuser=False
     )
     
     faculty_user = User.objects.create_user(
@@ -52,12 +53,9 @@ def create_sample_data():
         password='faculty123',
         first_name='Jane',
         last_name='Smith',
-        role='Faculty'
+        is_staff=True,
+        is_superuser=False
     )
-    
-    # Create user profiles
-    UserProfile.objects.create(user=student_user, student_id='STU001')
-    UserProfile.objects.create(user=faculty_user, employee_id='EMP001')
     
     # Create employee
     employee = Employee.objects.create(

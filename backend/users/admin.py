@@ -1,5 +1,7 @@
 from django.contrib import admin
-from .models import User, UserProfile
+from django.contrib.auth.admin import UserAdmin
+from django.contrib.auth.models import User
 
-admin.site.register(User)
-admin.site.register(UserProfile) 
+# Register the default User admin
+admin.site.unregister(User)
+admin.site.register(User, UserAdmin)

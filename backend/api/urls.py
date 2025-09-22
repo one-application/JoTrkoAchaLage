@@ -1,5 +1,5 @@
 from django.urls import path
-from users.views import register, login, refresh_token, profile
+from users.views import register, login, profile, change_password
 from academics.views import courses, course_detail, student_attendance, faculty_attendance_post
 from admissions.views import applications, application_detail
 from hr.views import employees, employee_detail, leaves, leave_detail
@@ -10,8 +10,8 @@ urlpatterns = [
     # Auth endpoints
     path('auth/register/', register, name='register'),
     path('auth/token/', login, name='login'),
-    path('auth/refresh/', refresh_token, name='refresh'),
     path('users/profile/', profile, name='profile'),
+    path('users/change-password/', change_password, name='change-password'),
     
     # Academics endpoints
     path('academics/courses/', courses, name='courses'),

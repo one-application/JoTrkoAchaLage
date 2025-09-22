@@ -1,4 +1,5 @@
 from django.db import models
+from django.conf import settings
 
 
 class Program(models.Model):
@@ -20,18 +21,18 @@ class Course(models.Model):
 
 
 class CourseRegistration(models.Model):
-	student = models.ForeignKey("users.UserProfile", on_delete=models.CASCADE, related_name="registrations")
-	course = models.ForeignKey(Course, on_delete=models.PROTECT, related_name="registrations")
-	term = models.CharField(max_length=16)
-	status = models.CharField(max_length=16, default="enrolled")
+    student = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="course_registrations")
+    course = models.ForeignKey(Course, on_delete=models.PROTECT, related_name="registrations")
+    term = models.CharField(max_length=16)
+    status = models.CharField(max_length=16, default="enrolled")
 
-	class Meta:
-		unique_together = ("student", "course", "term")
+    class Meta:
+        unique_together = ("student", "course", "term")
 
 
 class Attendance(models.Model):
-	student = models.ForeignKey("users.UserProfile", on_delete=models.CASCADE)
-	course = models.ForeignKey(Course, on_delete=models.CASCADE)
-	faculty = models.ForeignKey("hr.Employee", on_delete=models.PROTECT)
-	date = models.DateField()
-	status = models.CharField(max_length=8) 
+    student = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="attendances")
+    course = models.ForeignKey(Course, on_delete=models.CASCADE)
+    faculty = models.ForeignKey("hr.Employee", on_delete=models.PROTECT)
+    date = models.DateField()
+    status = models.CharField(max_length=8)

@@ -1,10 +1,11 @@
 from django.db import models
+from django.conf import settings
 
 
 class Applicant(models.Model):
 	email = models.EmailField(unique=True)
 	phone = models.CharField(max_length=20, db_index=True)
-	user = models.OneToOneField("users.User", null=True, blank=True, on_delete=models.SET_NULL)
+	user = models.OneToOneField(settings.AUTH_USER_MODEL, null=True, blank=True, on_delete=models.SET_NULL)
 
 	def __str__(self) -> str:
 		return self.email
